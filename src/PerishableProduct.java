@@ -1,3 +1,3 @@
-public class PerishableProduct {
-
+public class PerishableProduct extends Product {
+    
 }

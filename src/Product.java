@@ -1,20 +1,20 @@
 public class Product {
-    int productId;
-    String productName;
-    double price;
-    int quantity;
+    private static int productId;
+    public static String productName;
+    public double price;
+    public int quantity;
 
     public int getProductId() {
         return productId;
     }
-    public void setProductId(int productId) {
-        this.productId = productId;
+    public static void setProductId(int newProductId) {
+        productId = newProductId;
     }
     public String getProductName() {
         return productName;
     }
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public static void setProductName(String newProductName) {
+        productName = newProductName;
     }
     public double getPrice() {
         return price;
