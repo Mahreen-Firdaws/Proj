@@ -1,3 +1,3 @@
-public class PerishableProduct {
-    // this is a test
+public class PerishableProduct extends Product {
+    
 }
