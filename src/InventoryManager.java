@@ -35,21 +35,22 @@ public class InventoryManager {
     public void updateProduct(int productId){
         for (int i=0; i< uniqueProductCount ; i++){
             if (products[i] != null && products[i].getProductId() == productId) {
-                Scanner keyboard = new Scanner(System.in);
-                System.out.print("Enter either 'price' or 'quantity' to update: ");
-                String choice = keyboard.nextLine();
-                if (choice.equalsIgnoreCase("price")) {
-                    System.out.print("Enter new price: ");
-                    double newPrice = keyboard.nextDouble();
-                    products[i].setPrice(newPrice);
-                    System.out.println("Price updated.");
-                } else if (choice.equalsIgnoreCase("quantity")) {
-                    System.out.print("Enter new quantity: ");
-                    int newQuantity = keyboard.nextInt();
-                    products[i].setQuantity(newQuantity);
-                    System.out.println("Quantity updated.");
-                } else {
-                    System.out.println("Invalid choice.");
+                try (Scanner keyboard = new Scanner(System.in)) {
+                    System.out.print("Enter either 'price' or 'quantity' to update: ");
+                    String choice = keyboard.nextLine();
+                    if (choice.equalsIgnoreCase("price")) {
+                        System.out.print("Enter new price: ");
+                        double newPrice = keyboard.nextDouble();
+                        products[i].setPrice(newPrice);
+                        System.out.println("Price updated.");
+                    } else if (choice.equalsIgnoreCase("quantity")) {
+                        System.out.print("Enter new quantity: ");
+                        int newQuantity = keyboard.nextInt();
+                        products[i].setQuantity(newQuantity);
+                        System.out.println("Quantity updated.");
+                    } else {
+                        System.out.println("Invalid choice.");
+                    }
                 }
             }
         }
