@@ -1,12 +1,31 @@
-// Use java.time package for handling dates
-// and extend the Product class to include expiration date functionality.
-// Inspect java.time documentation for relevant classes and methods - see https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/time/package-summary.html
-// Specifically, consider using LocalDate for representing expiration dates.
-// Specifically, you might want to add a field for expiration date and methods to check if the product is expired.
-// Look into the java.time to look for a constraint that can help with date comparisons. 
-// Specifically looking into constraints around Days, Months (Months is given in general function), 
-// and Years could be useful for expiration date logic.
 import java.time.LocalDate;
+import java.util.Optional;
+
 public class PerishableProduct extends Product {
-    
+    private Optional<LocalDate> expirationDate;
+
+    public PerishableProduct(int par, String milk, double par1, int par2) {
+        super();
+        this.expirationDate = Optional.empty(); // no expiration by default
+    }
+    public PerishableProduct(int productId, String productName, double price, int quantity, LocalDate expirationDate) {
+        super(productId, productName, price, quantity);
+        this.expirationDate = Optional.ofNullable(expirationDate);
+    }
+
+    public Optional<LocalDate> getExpirationDate() {
+        return expirationDate;
+    }
+    public void setExpirationDate(LocalDate expirationDate) {
+        this.expirationDate = Optional.ofNullable(expirationDate);
+    }
+    public boolean isExpired() {
+        return expirationDate.map(d -> LocalDate.now().isAfter(d)).orElse(false);
+    }
+    @Override
+    public void displayProductInfo() {
+        super.displayProductInfo();
+        System.out.println("Expiration Date: " + expirationDate.map(LocalDate::toString).orElse("No expiration"));
+        System.out.println("Is Expired: " + isExpired());
+    }
 }

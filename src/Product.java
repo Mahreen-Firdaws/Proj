@@ -1,19 +1,31 @@
 public class Product {
-    private static int productId;
-    public static String productName;
+    private final int productId;
+    public String productName;
     public double price;
     public int quantity;
+
+
+    public Product() {
+        this.productId = -1;
+        productName = "Unnamed Product";
+        this.price = 0.0;
+        this.quantity = 0;
+    }
+    public Product(int productId, String productName, double price, int quantity) {
+        this.productId = productId;
+        this.productName = productName;
+        this.price = price;
+        this.quantity = quantity;
+    }
+
 
     public int getProductId() {
         return productId;
     }
-    public static void setProductId(int newProductId) {
-        productId = newProductId;
-    }
     public String getProductName() {
         return productName;
     }
-    public static void setProductName(String newProductName) {
+    public void setProductName(String newProductName) {
         productName = newProductName;
     }
     public double getPrice() {
