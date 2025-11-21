@@ -11,7 +11,13 @@ public class Product {
         this.price = 0.0;
         this.quantity = 0;
     }
-    public Product(int productId, String productName, double price, int quantity) {
+    public Product(int productId, String productName, double price, int quantity) throws InvalidInputException {
+        if (price <= 0) {
+            throw new InvalidInputException("Price must be greater than zero. Currently provided: " + price);
+        }
+        if (quantity < 0) {
+            throw new InvalidInputException("Quantity cannot be negative. Currently provided: " + quantity);
+        }
         this.productId = productId;
         this.productName = productName;
         this.price = price;
@@ -31,13 +37,19 @@ public class Product {
     public double getPrice() {
         return price;
     }
-    public void setPrice(double price) {
+    public void setPrice(double price) throws InvalidInputException {
+        if (price <= 0) {
+            throw new InvalidInputException("Price must be greater than zero. Currently provided: " + price);
+        }
         this.price = price;
     }
     public int getQuantity() {
         return quantity;
     }
-    public void setQuantity(int quantity) {
+    public void setQuantity(int quantity) throws InvalidInputException {
+        if (quantity < 0) {
+            throw new InvalidInputException("Quantity cannot be negative. Currently provided: " + quantity);
+        }
         this.quantity = quantity;
     }
 

@@ -4,11 +4,11 @@ import java.util.Optional;
 public class PerishableProduct extends Product {
     private Optional<LocalDate> expirationDate;
 
-    public PerishableProduct(int par, String milk, double par1, int par2) {
-        super();
+    public PerishableProduct(int productId, String productName, double price, int quantity) throws InvalidInputException {
+        super(productId, productName, price, quantity);
         this.expirationDate = Optional.empty(); // no expiration by default
     }
-    public PerishableProduct(int productId, String productName, double price, int quantity, LocalDate expirationDate) {
+    public PerishableProduct(int productId, String productName, double price, int quantity, LocalDate expirationDate) throws InvalidInputException {
         super(productId, productName, price, quantity);
         this.expirationDate = Optional.ofNullable(expirationDate);
     }
