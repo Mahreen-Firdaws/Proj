@@ -76,6 +76,7 @@ public class TestInventoryManager {
      * 
      * Validates that product fields are initialized correctly.
      */
+    @SuppressWarnings("UseSpecificCatch")
     private static void testProductCreation() {
         // Visual separator for testProductCreation section
         System.out.println("\n" + "-".repeat(80));
@@ -139,6 +140,7 @@ public class TestInventoryManager {
      * 
      * Validates that values are stored and retrieved correctly.
      */
+    @SuppressWarnings("UseSpecificCatch")
     private static void testProductGettersSetters() {
         // Visual separator for testProductGettersSetters section
         System.out.println("\n" + "-".repeat(80));
@@ -204,6 +206,7 @@ public class TestInventoryManager {
         // Purpose: Verify that the constructor rejects negative prices
         // Expected: InvalidInputException should be thrown (price must be > 0)
         try {
+            @SuppressWarnings("unused")
             Product invalidProduct = new Product(1, "Invalid", -50.0, 10); // Attempt to create product with negative price
             testFail("Constructor should reject negative price"); // If no exception thrown, test fails
         } catch (InvalidInputException e) { // Expected exception - validation is working correctly
@@ -216,6 +219,7 @@ public class TestInventoryManager {
         // Purpose: Verify that the constructor rejects zero prices
         // Expected: InvalidInputException should be thrown (price must be > 0, not >= 0)
         try {
+            @SuppressWarnings("unused")
             Product invalidProduct = new Product(2, "Invalid", 0.0, 10); // Attempt to create product with zero price
             testFail("Constructor should reject zero price"); // If no exception thrown, test fails
         } catch (InvalidInputException e) { // Expected exception - validation is working correctly
@@ -228,6 +232,7 @@ public class TestInventoryManager {
         // Purpose: Verify that the constructor rejects negative quantities
         // Expected: InvalidInputException should be thrown (quantity must be >= 0)
         try {
+            @SuppressWarnings("unused")
             Product invalidProduct = new Product(3, "Invalid", 50.0, -5); // Attempt to create product with negative quantity
             testFail("Constructor should reject negative quantity"); // If no exception thrown, test fails
         } catch (InvalidInputException e) { // Expected exception - validation is working correctly
@@ -285,6 +290,7 @@ public class TestInventoryManager {
      * 
      * Expected output: Product ID, Name, Price, Quantity
      */
+    @SuppressWarnings("UseSpecificCatch")
     private static void testProductDisplay() {
         System.out.println("\n" + "-".repeat(80));
         System.out.println("TEST: Product Display");
@@ -316,6 +322,7 @@ public class TestInventoryManager {
      * 
      * Validates proper use of Optional<LocalDate> for expiration dates.
      */
+    @SuppressWarnings("UseSpecificCatch")
     private static void testPerishableProductCreation() {
         System.out.println("\n" + "-".repeat(80));
         System.out.println("TEST: PerishableProduct Creation");
@@ -379,6 +386,7 @@ public class TestInventoryManager {
      * 
      * Validates date comparison logic using LocalDate.
      */
+    @SuppressWarnings("UseSpecificCatch")
     private static void testPerishableProductExpiration() {
         System.out.println("\n" + "-".repeat(80));
         System.out.println("TEST: PerishableProduct Expiration Logic");
@@ -455,6 +463,7 @@ public class TestInventoryManager {
      * 
      * Expected output: Product info + Expiration Date + Is Expired status
      */
+    @SuppressWarnings("UseSpecificCatch")
     private static void testPerishableProductDisplay() {
         System.out.println("\n" + "-".repeat(80));
         System.out.println("TEST: PerishableProduct Display");
@@ -488,6 +497,7 @@ public class TestInventoryManager {
      * 
      * Validates proper inventory insertion and exception handling.
      */
+    @SuppressWarnings("UseSpecificCatch")
     private static void testInventoryManagerAddProduct() {
         System.out.println("\n" + "-".repeat(80));
         System.out.println("TEST: InventoryManager Add Product");
@@ -556,6 +566,7 @@ public class TestInventoryManager {
      * 
      * Validates that all products are displayed with correct information.
      */
+    @SuppressWarnings("UseSpecificCatch")
     private static void testInventoryManagerViewProducts() {
         System.out.println("\n" + "-".repeat(80));
         System.out.println("TEST: InventoryManager View Products");
@@ -604,6 +615,7 @@ public class TestInventoryManager {
      * 
      * Validates product lookup and exception handling.
      */
+    @SuppressWarnings("UseSpecificCatch")
     private static void testInventoryManagerSearchProduct() {
         System.out.println("\n" + "-".repeat(80));
         System.out.println("TEST: InventoryManager Search Product");
@@ -665,6 +677,7 @@ public class TestInventoryManager {
      * 
      * Validates product removal and exception handling.
      */
+    @SuppressWarnings("UseSpecificCatch")
     private static void testInventoryManagerDeleteProduct() {
         System.out.println("\n" + "-".repeat(80));
         System.out.println("TEST: InventoryManager Delete Product");
@@ -733,6 +746,7 @@ public class TestInventoryManager {
      * 
      * Validates system robustness with boundary values.
      */
+    @SuppressWarnings("UseSpecificCatch")
     private static void testInventoryManagerEdgeCases() {
         System.out.println("\n" + "-".repeat(80));
         System.out.println("TEST: InventoryManager Edge Cases");
