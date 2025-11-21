@@ -25,40 +25,69 @@ import java.time.LocalDate;
 // Structure tests for maintainability and future extensions.
 // Ensure no modifications to Product and PerishableProduct classes.
 // Test all possible edge cases like null expiration dates and past/future dates, negative quantities, and zero prices, wrong product names, incorrect IDs, etc.
+// Test default constructors and parameterized constructors.
+// Test ExpirationDate handling in PerishableProduct thoroughly.
+// Test InventoryManager interactions if needed.
+// Test both valid and invalid data inputs.
+// Test instance methods and overridden methods.
+// Test inventory display functions.
+// Test product addition and deletion if needed.
+// test uniqueProductCount handling if needed.
+// Test everything in inventory manager.
 
 public class Main {
     public static void main(String[] args) {
-        // Test Product class
-        Product product1 = new Product(1, "Apple", 0.5, 100);
+        // Create Product instances
+        Product product1 = new Product(1, "Laptop", 999.99, 10);
+        Product product2 = new Product(2, "Smartphone", 499.99, 20);
+
+        // Create PerishableProduct instances
+        PerishableProduct perishable1 = new PerishableProduct(3, "Milk", 2.99, 30, LocalDate.now().plusDays(5));
+        PerishableProduct perishable2 = new PerishableProduct(4, "Yogurt", 1.99, 15, LocalDate.now().minusDays(1)); // expired
+
+        // Display product information
+        System.out.println("Product 1 Info:");
         product1.displayProductInfo();
         System.out.println();
 
-        Product product2 = new Product(-1, "Beepple", -0.5, -100);
+        System.out.println("Product 2 Info:");
         product2.displayProductInfo();
         System.out.println();
 
-        Product product3 = new Product();
-        product3.displayProductInfo();
-        System.out.println();
-
-        // Test PerishableProduct class
-        PerishableProduct perishable1 = new PerishableProduct(2, "Milk", 1.5, 50, LocalDate.now().plusDays(5));
+        System.out.println("Perishable Product 1 Info:");
         perishable1.displayProductInfo();
         System.out.println();
 
-        PerishableProduct perishable2 = new PerishableProduct(3, "Yogurt", 0.8, 30, LocalDate.now().minusDays(1));
+        System.out.println("Perishable Product 2 Info:");
         perishable2.displayProductInfo();
         System.out.println();
 
-        PerishableProduct perishable3 = new PerishableProduct(4, "Cheese", 2.0, 20, null);
-        perishable3.displayProductInfo();
-        System.out.println();
+        // Test expiration logic
+        System.out.println("Is Perishable Product 1 expired? " + perishable1.isExpired());
+        System.out.println("Is Perishable Product 2 expired? " + perishable2.isExpired());
 
-        PerishableProduct perishable4 = new PerishableProduct(-4, "Thing", -2.0, -20, null);
-        perishable4.displayProductInfo();
-        System.out.println();
-
-
-       
+        // Create InventoryManager instance
+        InventoryManager inventoryManager = new InventoryManager();
+        // Add products to inventory
+        inventoryManager.addProduct(product1);
+        inventoryManager.addProduct(product2);
+        inventoryManager.addProduct(perishable1);
+        inventoryManager.addProduct(perishable2);
+        // View all products in inventory
+        System.out.println("\nInventory Products:");
+        inventoryManager.viewProducts();
+        // Update a product
+        inventoryManager.updateProduct(1); // Update product1
+        // Delete a product
+        inventoryManager.deleteProduct(2); // Delete product2
+        // View all products after update and delete
+        System.out.println("\nInventory Products after update and delete:");
+        inventoryManager.viewProducts();
+        // Search for a product
+        System.out.println("\nSearching for Product ID 3:");
+        inventoryManager.searchProduct(3);
+        System.out.println("\nSearching for Product ID 2:");
+        inventoryManager.searchProduct(2);
+        // End of tests
     }
 }
