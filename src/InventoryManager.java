@@ -16,9 +16,12 @@ public class InventoryManager {
         uniqueProductCount = 0;
     }
 
-    public void addProduct(Product product)  {
+    public void addProduct(Product product) throws InvalidInputException { // Add new product to array
+        if (product == null) { // If user inputs null product (nothing inputed), an exception is thrown
+            throw new InvalidInputException("Cannot add null product to inventory.");
+        }
         if (uniqueProductCount >= products.length) {
-            System.out.println("Inventory is full. Cannot add more products.");
+            throw new InvalidInputException("Inventory is full. Cannot add more products."); // Added exception for full inventory
         }
         products[uniqueProductCount++] = product;
     }
@@ -32,7 +35,7 @@ public class InventoryManager {
         }
     }
 
-    public void updateProduct(int productId){
+    public void updateProduct(int productId) throws ProductNotFoundException {  // Update price or quantity of product by ID
         for (int i=0; i< uniqueProductCount ; i++){
             if (products[i] != null && products[i].getProductId() == productId) {
                 try (Scanner keyboard = new Scanner(System.in)) {
@@ -51,12 +54,16 @@ public class InventoryManager {
                     } else {
                         System.out.println("Invalid choice.");
                     }
+                } catch (InvalidInputException e) { // Catching invalid input exceptions for price/quantity updates
+                    System.out.println("Product update failed: " + e.getMessage());
                 }
+                return; 
             }
         }
+        throw new ProductNotFoundException("Product with ID " + productId + " not found."); // Exception if product ID not found
     }
 
-    public void deleteProduct(int productId) {
+    public void deleteProduct(int productId) throws ProductNotFoundException { // Delete product by ID
         for (int i = 0; i < uniqueProductCount; i++) {
             if (products[i] != null && products[i].getProductId() == productId) {
                 products[i] = null;
@@ -64,16 +71,16 @@ public class InventoryManager {
                 return;
             }
         }
-        System.out.println("Product with ID " + productId + " not found.");
+        throw new ProductNotFoundException("Product with ID " + productId + " not found."); // Exception if product ID not found
     }
 
-    public void searchProduct(int productId) {
+    public void searchProduct(int productId) throws ProductNotFoundException { // Search and display product details by ID
         for (int i = 0; i < uniqueProductCount; i++) {
             if (products[i] != null && products[i].getProductId() == productId) {
                 products[i].displayProductInfo();
                 return;
             }
         }
-        System.out.println("Product with ID " + productId + " not found.");
+        throw new ProductNotFoundException("Product with ID " + productId + " not found."); // Exception if product ID not found
     }
 }
