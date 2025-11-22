@@ -12,10 +12,12 @@ public class Main {
         System.out.println("|---------------------------------|");
         System.out.print("Input which case to run;");
         int choice = keyboard.nextInt();
-        while (choice < 1 || choice > 4){
+        while (true){
+            if (choice < 1 || choice > 4){
             System.out.print("Invalid input. Please enter a number between 1 and 4: ");
             choice = keyboard.nextInt();
-        if (choice == 1){
+            } else { 
+                if (choice == 1){
             // Test cases will be implemented here 
             System.out.println("Starting tests...");
             // Run all tests in TestInventoryManager - call the method to run all tests
@@ -55,34 +57,53 @@ public class Main {
                     Product product = new Product(prodID, prodName, prodPrice, prodQuantity);
                     inventoryManager.addProduct(product);
                     System.out.println("Product added successfully.");
+                    System.out.print("Enter your next choice: ");
+                    cliChoice = keyboard.nextInt();
                 } catch (InvalidInputException e) {
                     System.out.println("Failed to add product: " + e.getMessage());
+                    System.out.print("Enter your next choice: ");
+                    cliChoice = keyboard.nextInt();
                 }
                 } else if (cliChoice == 2){
                     inventoryManager.viewProducts();
+                    System.out.print("Enter your next choice: ");
+                    cliChoice = keyboard.nextInt();
                 } else if (cliChoice == 3){
                     System.out.print("Enter Product ID to update: ");
                     int updateId = keyboard.nextInt();
                     try {
                         inventoryManager.updateProduct(updateId);
+                        System.out.print("Enter your next choice: ");
+                        cliChoice = keyboard.nextInt();
                     } catch (ProductNotFoundException e) {
                         System.out.println(e.getMessage());
+                        System.out.print("Enter your next choice: ");
+                        cliChoice = keyboard.nextInt();
                     }
                 } else if (cliChoice == 4){
                     System.out.print("Enter Product ID to delete: ");
                     int prodID = keyboard.nextInt();
                     try{ 
                         inventoryManager.deleteProduct(prodID);
+                        System.out.print("Enter your next choice: ");
+                        cliChoice = keyboard.nextInt();
                     } catch (ProductNotFoundException e) {
                         System.out.println(e.getMessage());
+                        System.out.print("Enter your next choice: ");
+                        cliChoice = keyboard.nextInt();
                     }
                 } else if (cliChoice == 5){
                     System.out.print("Enter Product ID to search: ");
+                    System.out.print("Enter your next choice: ");
                     int searchId = keyboard.nextInt();
                     try {
                         inventoryManager.searchProduct(searchId);
+                        System.out.print("Enter your next choice: ");
+                        cliChoice = keyboard.nextInt();
                     } catch (ProductNotFoundException e) {
                         System.out.println(e.getMessage());
+                        System.out.print("Enter your next choice: ");
+                        cliChoice = keyboard.nextInt();
                     }
                 }
                 else if (cliChoice == 6){
@@ -100,6 +121,6 @@ public class Main {
             keyboard.close();
             System.exit(0);
         }
-    }
+    } } 
     }
 }

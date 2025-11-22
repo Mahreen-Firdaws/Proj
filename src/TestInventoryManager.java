@@ -104,7 +104,7 @@ public class TestInventoryManager {
         try {
             Product defaultProduct = new Product(); // Create product using no-argument constructor
             // Check that all default values match expected defaults
-            if (defaultProduct.getProductId() == -1 && defaultProduct.getProductName().equals("Unnamed Product")
+            if (defaultProduct.getProductId() == 0 && defaultProduct.getProductName().equals("Unnamed Product")
                 && defaultProduct.getPrice() == 0.0 && defaultProduct.getQuantity() == 0) {
                 testPass("Default product constructor");
             } else {

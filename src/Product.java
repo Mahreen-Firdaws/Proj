@@ -6,12 +6,15 @@ public class Product {
 
 
     public Product() {
-        this.productId = -1;
+        this.productId = 0;
         productName = "Unnamed Product";
         this.price = 0.0;
         this.quantity = 0;
     }
     public Product(int productId, String productName, double price, int quantity) throws InvalidInputException {
+        if (productId < 0) {
+            throw new InvalidInputException("Product ID cannot be negative. Currently provided: " + productId);
+        }
         if (price <= 0) {
             throw new InvalidInputException("Price must be greater than zero. Currently provided: " + price);
         }
