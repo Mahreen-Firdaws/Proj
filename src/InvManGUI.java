@@ -1593,7 +1593,7 @@ public class InvManGUI extends JFrame {
     }
 
     /* 
-     * Used exlusively in this file, but commented out to use Main.java instead
+     * Used exclusively in this file, but commented out to use Main.java instead
      * This was used to test the GUI independently without running the full application
 
     // public static void main(String[] args) {
