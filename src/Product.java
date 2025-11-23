@@ -84,7 +84,7 @@ public class Product {
     /**
      * Sets the quantity with validation.
      * 
-     * @param quantity New quantity
+     * @param quantity New quantity (must be >= 0)
      * @throws InvalidInputException if quantity < 0
      */
     public void setQuantity(int quantity) throws InvalidInputException {
