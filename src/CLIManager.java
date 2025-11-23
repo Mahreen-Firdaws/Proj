@@ -31,8 +31,9 @@ public class CLIManager {
                         try {
                             System.out.print("Input Product ID:");
                             int prodID=keyboard.nextInt();
+                            keyboard.nextLine(); // consume leftover newline
                             System.out.print("Input Product Name:");
-                            String prodName=keyboard.next();
+                            String prodName=keyboard.nextLine();
                             System.out.print("Input Product Price:");
                             double prodPrice=keyboard.nextDouble();
                             System.out.print("Input Product Quantity:");
