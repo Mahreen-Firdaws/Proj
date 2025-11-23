@@ -60,9 +60,6 @@ public class Product {
         if (quantity < 0) {
             throw new InvalidInputException("Quantity cannot be negative. Currently provided: " + quantity);
         }
-        if (productId < 0) {
-            throw new InvalidInputException("Product ID cannot be negative. Currently provided: " + productId);
-        }
         
         this.productId = productId;
         this.productName = productName;

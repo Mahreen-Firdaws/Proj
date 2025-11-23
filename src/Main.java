@@ -19,6 +19,7 @@ public class Main {
         System.out.print("Choose an option (1, 2, or 3): ");
         
         int choice = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
         
         switch (choice) {
             case 1 -> {
@@ -31,10 +32,11 @@ public class Main {
             
             case 2 -> {
                 System.out.println("\nLaunching CLI...");
-                // Don't close scanner - CLIManager will create its own and close it
                 @SuppressWarnings("unused")
-                CLIManager cli = new CLIManager();
+                CLIManager cli = new CLIManager(scanner);
+                // CLIManager handles its own loop and closes scanner when done
             }
+            
             case 3 -> {
                 System.out.println("\nLaunching GUI...");
                 scanner.close();

@@ -886,6 +886,10 @@ public class InvManGUI extends JFrame {
         tableModel.setRowCount(0);
         
         for (Product currentProductForDisplay : productList) {
+            if (currentProductForDisplay == null) {
+                continue;
+            }
+            
             String productTypeDisplayText = (currentProductForDisplay instanceof PerishableProduct) 
                 ? "Perishable"
                 : "Standard";

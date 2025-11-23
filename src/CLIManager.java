@@ -2,9 +2,11 @@ import java.util.Scanner;
 public class CLIManager {
 
     public CLIManager() {
+        this(new Scanner(System.in));
+    }
     
-        Scanner keyboard = new Scanner(System.in);
-        InventoryManager inventoryManager = new InventoryManager(); // Create InventoryManager instance
+    public CLIManager(Scanner keyboard) {
+        InventoryManager inventoryManager = new InventoryManager();
         
         boolean running = true;
         while (running) {
@@ -83,5 +85,4 @@ public class CLIManager {
                 }
             }
        }
-
 }
