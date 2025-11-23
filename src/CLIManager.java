@@ -39,7 +39,7 @@ public class CLIManager {
             System.out.println("|---------------------------------|");
             System.out.print("Enter your choice: ");
             int cliChoice = keyboard.nextInt();
-            keyboard.nextLine(); // consume leftover newline after menu choice
+            keyboard.nextLine();
             
             if (cliChoice < 1 || cliChoice > 6) {
                 System.out.println("Invalid input. Please enter a number between 1 and 6.");
@@ -51,7 +51,7 @@ public class CLIManager {
                         try {
                             System.out.print("Input Product ID:");
                             int prodID=keyboard.nextInt();
-                            keyboard.nextLine(); // consume leftover newline
+                            keyboard.nextLine();
                             System.out.print("Input Product Name:");
                             String prodName=keyboard.nextLine();
                             System.out.print("Input Product Price:");

@@ -41,7 +41,6 @@ public class InventoryManager {
 
     /**
      * Displays all products in the inventory to the console.
-     * Loops through products array and prints each non-null product.
      */
     public void viewProducts() {
         for (int i = 0; i < uniqueProductCount; i++) {
@@ -90,7 +89,7 @@ public class InventoryManager {
     }
 
     /**
-     * Deletes a product from inventory by ID using soft delete (sets slot to null).
+     * Deletes a product from inventory by ID (soft delete).
      * 
      * @param productId The ID of the product to delete
      * @throws ProductNotFoundException if no product with given ID exists
@@ -107,7 +106,7 @@ public class InventoryManager {
     }
 
     /**
-     * Searches for a product by ID and displays its information to console.
+     * Searches for a product by ID and displays its information.
      * 
      * @param productId The ID of the product to search for
      * @throws ProductNotFoundException if no product with given ID exists
@@ -123,19 +122,18 @@ public class InventoryManager {
     }
     
     /**
-     * Gets direct reference to the internal products array for GUI access.
+     * Gets the internal products array.
      * 
-     * @return Internal products array (size 50, may contain nulls)
+     * @return Products array (size 50, may contain nulls)
      */
     public Product[] getProducts() {
         return products;
     }
     
     /**
-     * Gets the count of how many array slots have been used.
-     * Note: This includes deleted products (null slots).
+     * Gets the count of array slots used (includes deleted products).
      * 
-     * @return Number of array slots that have been used (0-50)
+     * @return Number of slots used (0-50)
      */
     public int getProductCount() {
         return uniqueProductCount;
