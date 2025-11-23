@@ -922,7 +922,7 @@ public class InvManGUI extends JFrame {
      * Label takes 30% width on left, input field takes 70% width on right.
      * 
      * @param panel The JPanel to add the row to (must use GridBagLayout)
-     * @param gbc GridBagConstraints object for positioning
+     * @param gridConstraints GridBagConstraints object for positioning
      * @param row The row number
      * @param labelText The label text
      * @param field The input component
@@ -1110,8 +1110,8 @@ public class InvManGUI extends JFrame {
             }
             
             // Reject names that are ONLY numbers (e.g., "12345" is not a valid name)
-            // ^[0-9 ]+$ means: start to end, only digits and spaces
-            if (productName.matches("^[0-9 ]+$")) {
+            // ^[0-9]+$ means: start to end, only digits (no spaces)
+            if (productName.matches("^[0-9]+$")) {
                 showError("Product name cannot be numbers only!");
                 return;
             }
@@ -1593,7 +1593,7 @@ public class InvManGUI extends JFrame {
     }
 
     /* 
-     * Used exlusively in this file, but commented out to use Main.java instead
+     * Used exclusively in this file, but commented out to use Main.java instead
      * This was used to test the GUI independently without running the full application
 
     // public static void main(String[] args) {
