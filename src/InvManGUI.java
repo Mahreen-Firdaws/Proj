@@ -922,7 +922,7 @@ public class InvManGUI extends JFrame {
      * Label takes 30% width on left, input field takes 70% width on right.
      * 
      * @param panel The JPanel to add the row to (must use GridBagLayout)
-     * @param gbc GridBagConstraints object for positioning
+     * @param gridConstraints GridBagConstraints object for positioning
      * @param row The row number
      * @param labelText The label text
      * @param field The input component
