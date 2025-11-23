@@ -275,14 +275,14 @@ public class InvManGUI extends JFrame {
             
             try {
                 int currentSearchedProductId = Integer.parseInt(searchProductIdText);
-                Product[] allProductsArrayForSearch = manager.getProducts();
+                Product[] allProductsArrayInSearch = manager.getProducts();
                 Product foundProductInSearch = null;
                 
                 // Find product with matching ID
                 for (int searchLoopIndex = 0; searchLoopIndex < manager.getProductCount(); searchLoopIndex++) {
-                    if (allProductsArrayForSearch[searchLoopIndex] != null && 
-                        allProductsArrayForSearch[searchLoopIndex].getProductId() == currentSearchedProductId) {
-                        foundProductInSearch = allProductsArrayForSearch[searchLoopIndex];
+                    if (allProductsArrayInSearch[searchLoopIndex] != null && 
+                        allProductsArrayInSearch[searchLoopIndex].getProductId() == currentSearchedProductId) {
+                        foundProductInSearch = allProductsArrayInSearch[searchLoopIndex];
                         break;
                     }
                 }
@@ -1594,7 +1594,7 @@ public class InvManGUI extends JFrame {
 
     /* 
      * Used exlusively in this file, but commented out to use Main.java instead
-     * This was used to test the GUI independently, without running the full application
+     * This was used to test the GUI independently without running the full application
 
     // public static void main(String[] args) {
     //     // Schedule GUI creation on Event Dispatch Thread for thread safety

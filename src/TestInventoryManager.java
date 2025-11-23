@@ -44,12 +44,12 @@ public class TestInventoryManager {
         // ========================================================================
         // INVENTORY MANAGER CLASS TESTS
         // ========================================================================
-        testInventoryManagerAddProduct();
-        testInventoryManagerViewProducts();
-        testInventoryManagerSearchProduct();
-        testInventoryManagerDeleteProduct();
-        testInventoryManagerEdgeCases();
-        testInventoryFullException();
+        testInvManAddProduct();
+        testInvManViewProducts();
+        testInvManSearchProduct();
+        testInvManDeleteProduct();
+        testInvManEdgeCases();
+        testInvFullException();
 
         // ========================================================================
         // PRINT FINAL TEST SUMMARY
@@ -95,11 +95,10 @@ public class TestInventoryManager {
         }
 
         // Test 2: Default constructor
-        // Purpose: Verify that the default constructor initializes Product with default values
-        // Expected: Product ID = 0, Name = "Unnamed Product", Price = 0.0, Quantity = 0
+        // Purpose: Verify that the default constructor initializes fields to default values
+        // Expected: Product should be created with default values (ID=0, Name="Unnamed Product", Price=0.0, Quantity=0)
         try {
-            Product defaultProduct = new Product(); // Create product using no-argument constructor
-            // Check that all default values match expected defaults
+            Product defaultProduct = new Product();
             if (defaultProduct.getProductId() == 0 && defaultProduct.getProductName().equals("Unnamed Product")
                 && defaultProduct.getPrice() == 0.0 && defaultProduct.getQuantity() == 0) {
                 testPass("Default product constructor");
@@ -111,11 +110,11 @@ public class TestInventoryManager {
         }
 
         // Test 3: Zero quantity (valid edge case)
-        // Purpose: Verify that products can be created with zero quantity (representing out-of-stock items)
-        // Expected: Product should accept quantity of 0 without throwing exception
+        // Purpose: Verify that a Product can be created with zero quantity
+        // Expected: Product should be created successfully with quantity set to 0
         try {
-            Product mouseWithZeroQuantity = new Product(3, "Mouse", 25.50, 0); // Quantity = 0 is valid (not negative)
-            if (mouseWithZeroQuantity.getQuantity() == 0) {
+            Product zeroQtyMouse = new Product(3, "Mouse", 25.50, 0);
+            if (zeroQtyMouse.getQuantity() == 0) {
                 testPass("Product creation with zero quantity");
             } else {
                 testFail("Product creation with zero quantity");
@@ -142,13 +141,12 @@ public class TestInventoryManager {
         System.out.println("TEST: Product Getters and Setters");
         System.out.println("-".repeat(80));
 
-        // Purpose: Test that all getter and setter methods work correctly
-        // Expected: Values should be retrieved and updated properly through getters/setters
         try {
             Product testKeyboardProduct = new Product(10, "Keyboard", 75.00, 15); // Create initial product for testing
 
             // Test 1: setProductName and getProductName
-            // Purpose: Verify that product name can be changed and retrieved
+            // Purpose: Verify that product name can be updated and retrieved correctly
+            // Expected: Name should be updated to new value
             testKeyboardProduct.setProductName("Mechanical Keyboard"); // Change name from "Keyboard" to "Mechanical Keyboard"
             if (testKeyboardProduct.getProductName().equals("Mechanical Keyboard")) {
                 testPass("setProductName and getProductName");
@@ -158,6 +156,7 @@ public class TestInventoryManager {
 
             // Test 2: setPrice with valid value
             // Purpose: Verify that price can be updated with a valid positive value
+            // Expected: Price should be updated without exception
             testKeyboardProduct.setPrice(85.00); // Change price from 75.00 to 85.00
             if (testKeyboardProduct.getPrice() == 85.00) {
                 testPass("setPrice with valid value");
@@ -167,6 +166,7 @@ public class TestInventoryManager {
 
             // Test 3: setQuantity with valid value
             // Purpose: Verify that quantity can be updated with a valid non-negative value
+            // Expected: Quantity should be updated without exception
             testKeyboardProduct.setQuantity(20); // Change quantity from 15 to 20
             if (testKeyboardProduct.getQuantity() == 20) {
                 testPass("setQuantity with valid value");
@@ -202,11 +202,11 @@ public class TestInventoryManager {
         // Expected: InvalidInputException should be thrown (price must be > 0)
         try {
             @SuppressWarnings("unused")
-            Product productWithInvalidData = new Product(1, "Invalid", -50.0, 10); // Attempt to create product with negative price
-            testFail("Constructor should reject negative price"); // If no exception thrown, test fails
-        } catch (InvalidInputException validationException) { // Expected exception - validation is working correctly
+            Product invalid = new Product(1, "Invalid", -50.0, 10);
+            testFail("Constructor should reject negative price");
+        } catch (InvalidInputException caughtException) {
             testPass("Constructor rejects negative price");
-        } catch (Exception wrongException) { // Wrong exception type thrown
+        } catch (Exception wrongException) { 
             testFail("Wrong exception type for negative price: " + wrongException.getClass().getName());
         }
 
@@ -215,11 +215,11 @@ public class TestInventoryManager {
         // Expected: InvalidInputException should be thrown (price must be > 0, not >= 0)
         try {
             @SuppressWarnings("unused")
-            Product productWithZeroPrice = new Product(2, "Invalid", 0.0, 10); // Attempt to create product with zero price
-            testFail("Constructor should reject zero price"); // If no exception thrown, test fails
-        } catch (InvalidInputException validationException) { // Expected exception - validation is working correctly
+            Product zeroPrice = new Product(2, "Invalid", 0.0, 10);
+            testFail("Constructor should reject zero price");
+        } catch (InvalidInputException caughtException) {
             testPass("Constructor rejects zero price");
-        } catch (Exception wrongException) { // Wrong exception type thrown
+        } catch (Exception wrongException) { 
             testFail("Wrong exception type for zero price: " + wrongException.getClass().getName());
         }
 
@@ -228,11 +228,11 @@ public class TestInventoryManager {
         // Expected: InvalidInputException should be thrown (quantity must be >= 0)
         try {
             @SuppressWarnings("unused")
-            Product productWithNegativeQuantity = new Product(3, "Invalid", 50.0, -5); // Attempt to create product with negative quantity
-            testFail("Constructor should reject negative quantity"); // If no exception thrown, test fails
-        } catch (InvalidInputException validationException) { // Expected exception - validation is working correctly
+            Product negQty = new Product(3, "Invalid", 50.0, -5);
+            testFail("Constructor should reject negative quantity");
+        } catch (InvalidInputException caughInputException) {
             testPass("Constructor rejects negative quantity");
-        } catch (Exception wrongException) { // Wrong exception type thrown
+        } catch (Exception wrongException) { 
             testFail("Wrong exception type for negative quantity: " + wrongException.getClass().getName());
         }
 
@@ -241,9 +241,9 @@ public class TestInventoryManager {
         // Expected: InvalidInputException should be thrown (ID must be >= 0)
         try {
             @SuppressWarnings("unused")
-            Product productWithNegativeId = new Product(-1, "Invalid", 50.0, 10); // Attempt to create product with negative ID
-            testFail("Constructor should reject negative product ID"); // If no exception thrown, test fails
-        } catch (InvalidInputException validationException) { // Expected exception - validation is working correctly
+            Product negId = new Product(-1, "Invalid", 50.0, 10);
+            testFail("Constructor should reject negative product ID");
+        } catch (InvalidInputException invalidInputException) {
             testPass("Constructor rejects negative product ID");
         } catch (Exception wrongException) { // Wrong exception type thrown
             testFail("Wrong exception type for negative product ID: " + wrongException.getClass().getName());
@@ -271,18 +271,18 @@ public class TestInventoryManager {
             testFail("setPrice should reject zero price"); // If no exception thrown, test fails
         } catch (InvalidInputException validationException) { // Expected exception - validation is working correctly
             testPass("setPrice rejects zero price");
-        } catch (Exception wrongException) { // Wrong exception type thrown
-            testFail("Wrong exception for setPrice zero: " + wrongException.getClass().getName());
+        } catch (Exception e) {
+            testFail("Wrong exception for setPrice zero: " + e.getClass().getName());
         }
 
         // Test 7: Negative quantity via setter
         // Purpose: Verify that setQuantity() rejects negative values after object creation
         // Expected: InvalidInputException should be thrown
         try {
-            Product validProductForNegativeQuantityTest = new Product(6, "Test", 100.0, 5); // Create valid product first
-            validProductForNegativeQuantityTest.setQuantity(-10); // Attempt to set negative quantity
-            testFail("setQuantity should reject negative quantity"); // If no exception thrown, test fails
-        } catch (InvalidInputException validationException) { // Expected exception - validation is working correctly
+            Product testProduct3 = new Product(6, "Test", 100.0, 5);
+            testProduct3.setQuantity(-10);
+            testFail("setQuantity should reject negative quantity");
+        } catch (InvalidInputException e) {
             testPass("setQuantity rejects negative quantity");
         } catch (Exception wrongException) { // Wrong exception type thrown
             testFail("Wrong exception for setQuantity negative: " + wrongException.getClass().getName());
@@ -303,13 +303,13 @@ public class TestInventoryManager {
         System.out.println("\n" + "-".repeat(80));
         System.out.println("TEST: Product Display");
         System.out.println("-".repeat(80));
-
+        // Test 1: displayProductInfo output
         // Purpose: Verify that displayProductInfo() prints product details correctly
         // Expected: Product ID, Name, Price, and Quantity should be printed to console
         try {
-            Product monitorProductForDisplay = new Product(100, "Monitor", 299.99, 8); // Create product to display
+            Product monitor = new Product(100, "Monitor", 299.99, 8);
             System.out.println("Expected output:");
-            monitorProductForDisplay.displayProductInfo(); // Should print all product information in formatted output
+            monitor.displayProductInfo();
             testPass("Product displayProductInfo executed");
         } catch (Exception caughtException) { // Catch any unexpected exceptions during display
             testFail("displayProductInfo threw exception: " + caughtException.getMessage());
@@ -506,7 +506,7 @@ public class TestInventoryManager {
      * Validates proper inventory insertion and exception handling.
      */
     @SuppressWarnings("UseSpecificCatch")
-    private static void testInventoryManagerAddProduct() {
+    private static void testInvManAddProduct() {
         System.out.println("\n" + "-".repeat(80));
         System.out.println("TEST: InventoryManager Add Product");
         System.out.println("-".repeat(80));
@@ -515,9 +515,9 @@ public class TestInventoryManager {
         // Purpose: Verify that a valid product can be added to inventory
         // Expected: Product should be added successfully without exceptions
         try {
-            InventoryManager inventoryManagerForAddTest = new InventoryManager(); // Create new inventory (capacity = 50)
+            InventoryManager invManAddTest = new InventoryManager(); // Create new inventory (capacity = 50)
             Product tabletProduct = new Product(1, "Tablet", 399.99, 5);
-            inventoryManagerForAddTest.addProduct(tabletProduct); // Add product to inventory
+            invManAddTest.addProduct(tabletProduct); // Add product to inventory
             testPass("Add valid product to inventory");
         } catch (Exception caughtException) { // Catch any unexpected exceptions
             testFail("Add valid product threw exception: " + caughtException.getMessage());
@@ -527,13 +527,13 @@ public class TestInventoryManager {
         // Purpose: Verify that multiple products can be added sequentially
         // Expected: All products should be added without conflicts or exceptions
         try {
-            InventoryManager inventoryManagerForMultipleProducts = new InventoryManager();
+            InventoryManager invManMultipleProducts = new InventoryManager();
             Product firstTestProduct = new Product(1, "Item1", 10.0, 5);
             Product secondTestProduct = new Product(2, "Item2", 20.0, 10);
             Product thirdTestProduct = new Product(3, "Item3", 30.0, 15);
-            inventoryManagerForMultipleProducts.addProduct(firstTestProduct); // Add first product
-            inventoryManagerForMultipleProducts.addProduct(secondTestProduct); // Add second product
-            inventoryManagerForMultipleProducts.addProduct(thirdTestProduct); // Add third product
+            invManMultipleProducts.addProduct(firstTestProduct); // Add first product
+            invManMultipleProducts.addProduct(secondTestProduct); // Add second product
+            invManMultipleProducts.addProduct(thirdTestProduct); // Add third product
             testPass("Add multiple products to inventory");
         } catch (Exception caughtException) { // Catch any unexpected exceptions
             testFail("Add multiple products threw exception: " + caughtException.getMessage());
@@ -543,8 +543,8 @@ public class TestInventoryManager {
         // Purpose: Verify that null products are rejected
         // Expected: InvalidInputException should be thrown (cannot add null)
         try {
-            InventoryManager inventoryManagerForNullTest = new InventoryManager();
-            inventoryManagerForNullTest.addProduct(null); // Attempt to add null product
+            InventoryManager invManNullTest = new InventoryManager();
+            invManNullTest.addProduct(null); // Attempt to add null product
             testFail("Should throw InvalidInputException for null product"); // If no exception, test fails
         } catch (InvalidInputException validationException) { // Expected exception - validation is working
             testPass("Add null product throws InvalidInputException");
@@ -556,9 +556,9 @@ public class TestInventoryManager {
         // Purpose: Verify that PerishableProduct (subclass of Product) can be added
         // Expected: Perishable product should be added successfully (polymorphism)
         try {
-            InventoryManager inventoryManagerForPerishableTest = new InventoryManager();
+            InventoryManager invManPerishableTest = new InventoryManager();
             PerishableProduct breadProduct = new PerishableProduct(100, "Bread", 2.99, 40, LocalDate.of(2025, 12, 1));
-            inventoryManagerForPerishableTest.addProduct(breadProduct); // Add perishable product (should work due to inheritance)
+            invManPerishableTest.addProduct(breadProduct); // Add perishable product (should work due to inheritance)
             testPass("Add perishable product to inventory");
         } catch (Exception caughtException) { // Catch any unexpected exceptions
             testFail("Add perishable product threw exception: " + caughtException.getMessage());
@@ -575,7 +575,7 @@ public class TestInventoryManager {
      * Validates that all products are displayed with correct information.
      */
     @SuppressWarnings("UseSpecificCatch")
-    private static void testInventoryManagerViewProducts() {
+    private static void testInvManViewProducts() {
         System.out.println("\n" + "-".repeat(80));
         System.out.println("TEST: InventoryManager View Products");
         System.out.println("-".repeat(80));
@@ -584,17 +584,17 @@ public class TestInventoryManager {
         // Purpose: Verify that viewProducts() displays all products in inventory
         // Expected: All added products should be displayed with their information
         try {
-            InventoryManager inventoryManagerForViewTest = new InventoryManager();
+            InventoryManager invManViewTest = new InventoryManager();
             Product phoneProduct = new Product(10, "Phone", 699.99, 15);
             Product chargerProduct = new Product(11, "Charger", 19.99, 50);
             PerishableProduct juiceProduct = new PerishableProduct(12, "Juice", 3.50, 30, LocalDate.of(2025, 12, 15));
             
-            inventoryManagerForViewTest.addProduct(phoneProduct);   // Add first product
-            inventoryManagerForViewTest.addProduct(chargerProduct); // Add second product
-            inventoryManagerForViewTest.addProduct(juiceProduct);   // Add third product (perishable)
+            invManViewTest.addProduct(phoneProduct);   // Add first product
+            invManViewTest.addProduct(chargerProduct); // Add second product
+            invManViewTest.addProduct(juiceProduct);   // Add third product (perishable)
             
             System.out.println("Expected output (3 products):");
-            inventoryManagerForViewTest.viewProducts(); // Should display all 3 products with their details
+            invManViewTest.viewProducts(); // Should display all 3 products with their details
             testPass("viewProducts displays all products");
         } catch (Exception caughtException) { // Catch any unexpected exceptions
             testFail("viewProducts threw exception: " + caughtException.getMessage());
@@ -604,9 +604,9 @@ public class TestInventoryManager {
         // Purpose: Verify that viewProducts() handles empty inventory gracefully
         // Expected: No output (or appropriate message), no exceptions thrown
         try {
-            InventoryManager emptyInventoryManagerForViewTest = new InventoryManager(); // Create empty inventory
+            InventoryManager emptyInvManViewTest = new InventoryManager(); // Create empty inventory
             System.out.println("Expected output (empty):");
-            emptyInventoryManagerForViewTest.viewProducts(); // Should handle empty inventory without errors
+            emptyInvManViewTest.viewProducts(); // Should handle empty inventory without errors
             testPass("viewProducts on empty inventory");
         } catch (Exception caughtException) { // Catch any unexpected exceptions
             testFail("viewProducts on empty inventory threw exception: " + caughtException.getMessage());
@@ -624,7 +624,7 @@ public class TestInventoryManager {
      * Validates product lookup and exception handling.
      */
     @SuppressWarnings("UseSpecificCatch")
-    private static void testInventoryManagerSearchProduct() {
+    private static void testInvManSearchProduct() {
         System.out.println("\n" + "-".repeat(80));
         System.out.println("TEST: InventoryManager Search Product");
         System.out.println("-".repeat(80));
@@ -633,14 +633,14 @@ public class TestInventoryManager {
         // Purpose: Verify that searchProduct() finds and displays products by ID
         // Expected: Product with matching ID should be found and displayed
         try {
-            InventoryManager inventoryManagerForSearchTest = new InventoryManager();
+            InventoryManager invManSearchTest = new InventoryManager();
             Product headphonesProduct = new Product(20, "Headphones", 79.99, 12);
             Product speakerProduct = new Product(21, "Speaker", 149.99, 8);
-            inventoryManagerForSearchTest.addProduct(headphonesProduct);
-            inventoryManagerForSearchTest.addProduct(speakerProduct);
+            invManSearchTest.addProduct(headphonesProduct);
+            invManSearchTest.addProduct(speakerProduct);
             
             System.out.println("Searching for product ID 20:");
-            inventoryManagerForSearchTest.searchProduct(20); // Should find and display headphones
+            invManSearchTest.searchProduct(20); // Should find and display headphones
             testPass("Search for existing product");
         } catch (Exception caughtException) { // Catch any unexpected exceptions
             testFail("Search existing product threw exception: " + caughtException.getMessage());
@@ -650,10 +650,10 @@ public class TestInventoryManager {
         // Purpose: Verify that searchProduct() throws exception when product not found
         // Expected: ProductNotFoundException should be thrown for non-existent ID
         try {
-            InventoryManager inventoryManagerForNonExistentSearch = new InventoryManager();
+            InventoryManager invManNonExistentSearch = new InventoryManager();
             Product mouseProduct = new Product(30, "Mouse", 25.00, 20);
-            inventoryManagerForNonExistentSearch.addProduct(mouseProduct);
-            inventoryManagerForNonExistentSearch.searchProduct(999); // Search for ID that doesn't exist
+            invManNonExistentSearch.addProduct(mouseProduct);
+            invManNonExistentSearch.searchProduct(999); // Search for ID that doesn't exist
             testFail("Should throw ProductNotFoundException for non-existent product"); // If no exception, test fails
         } catch (ProductNotFoundException expectedNotFoundException) { // Expected exception - product not found
             testPass("Search non-existent product throws ProductNotFoundException");
@@ -665,8 +665,8 @@ public class TestInventoryManager {
         // Purpose: Verify that searchProduct() throws exception when inventory is empty
         // Expected: ProductNotFoundException should be thrown
         try {
-            InventoryManager emptyInventoryManagerForSearchTest = new InventoryManager(); // Empty inventory
-            emptyInventoryManagerForSearchTest.searchProduct(1); // Try to search in empty inventory
+            InventoryManager emptyInvManSearchTest = new InventoryManager(); // Empty inventory
+            emptyInvManSearchTest.searchProduct(1); // Try to search in empty inventory
             testFail("Should throw ProductNotFoundException for empty inventory"); // If no exception, test fails
         } catch (ProductNotFoundException expectedNotFoundException) { // Expected exception - inventory is empty
             testPass("Search in empty inventory throws ProductNotFoundException");
@@ -686,7 +686,7 @@ public class TestInventoryManager {
      * Validates product removal and exception handling.
      */
     @SuppressWarnings("UseSpecificCatch")
-    private static void testInventoryManagerDeleteProduct() {
+    private static void testInvManDeleteProduct() {
         System.out.println("\n" + "-".repeat(80));
         System.out.println("TEST: InventoryManager Delete Product");
         System.out.println("-".repeat(80));
@@ -695,17 +695,17 @@ public class TestInventoryManager {
         // Purpose: Verify that deleteProduct() successfully removes products by ID
         // Expected: Product should be deleted (set to null) and no longer searchable
         try {
-            InventoryManager inventoryManagerForDeleteTest = new InventoryManager();
+            InventoryManager invManDeleteTest = new InventoryManager();
             Product cameraProduct = new Product(40, "Camera", 499.99, 3);
             Product lensProduct = new Product(41, "Lens", 299.99, 5);
-            inventoryManagerForDeleteTest.addProduct(cameraProduct);
-            inventoryManagerForDeleteTest.addProduct(lensProduct);
-            inventoryManagerForDeleteTest.deleteProduct(40); // Delete camera by ID
+            invManDeleteTest.addProduct(cameraProduct);
+            invManDeleteTest.addProduct(lensProduct);
+            invManDeleteTest.deleteProduct(40); // Delete camera by ID
             testPass("Delete existing product");
             
             // Verify deletion by trying to search for deleted product
             try {
-                inventoryManagerForDeleteTest.searchProduct(40); // Try to find deleted product
+                invManDeleteTest.searchProduct(40); // Try to find deleted product
                 testFail("Deleted product should not be found"); // If found, deletion failed
             } catch (ProductNotFoundException expectedNotFoundException) { // Expected - product should not exist
                 testPass("Deleted product cannot be found (verified)");
@@ -718,10 +718,10 @@ public class TestInventoryManager {
         // Purpose: Verify that deleteProduct() throws exception when product doesn't exist
         // Expected: ProductNotFoundException should be thrown for non-existent ID
         try {
-            InventoryManager inventoryManagerForDeleteNonExistent = new InventoryManager();
+            InventoryManager invManDeleteNonExistent = new InventoryManager();
             Product productForDeleteTest = new Product(50, "Test", 100.0, 10);
-            inventoryManagerForDeleteNonExistent.addProduct(productForDeleteTest);
-            inventoryManagerForDeleteNonExistent.deleteProduct(999); // Try to delete product that doesn't exist
+            invManDeleteNonExistent.addProduct(productForDeleteTest);
+            invManDeleteNonExistent.deleteProduct(999); // Try to delete product that doesn't exist
             testFail("Should throw ProductNotFoundException when deleting non-existent product"); // If no exception, test fails
         } catch (ProductNotFoundException expectedNotFoundException) { // Expected exception - product not found
             testPass("Delete non-existent product throws ProductNotFoundException");
@@ -733,8 +733,8 @@ public class TestInventoryManager {
         // Purpose: Verify that deleteProduct() throws exception when inventory is empty
         // Expected: ProductNotFoundException should be thrown
         try {
-            InventoryManager emptyInventoryManagerForDeleteTest = new InventoryManager(); // Empty inventory
-            emptyInventoryManagerForDeleteTest.deleteProduct(1); // Try to delete from empty inventory
+            InventoryManager emptyInvManDeleteTest = new InventoryManager(); // Empty inventory
+            emptyInvManDeleteTest.deleteProduct(1); // Try to delete from empty inventory
             testFail("Should throw ProductNotFoundException for empty inventory"); // If no exception, test fails
         } catch (ProductNotFoundException expectedNotFoundException) { // Expected exception - inventory is empty
             testPass("Delete from empty inventory throws ProductNotFoundException");
@@ -755,7 +755,7 @@ public class TestInventoryManager {
      * Validates system robustness with boundary values.
      */
     @SuppressWarnings("UseSpecificCatch")
-    private static void testInventoryManagerEdgeCases() {
+    private static void testInvManEdgeCases() {
         System.out.println("\n" + "-".repeat(80));
         System.out.println("TEST: InventoryManager Edge Cases");
         System.out.println("-".repeat(80));
@@ -764,10 +764,10 @@ public class TestInventoryManager {
         // Purpose: Verify that expired products can still be added to inventory
         // Expected: Product should be added successfully but isExpired() should return true
         try {
-            InventoryManager inventoryManagerForExpiredTest = new InventoryManager();
-            LocalDate pastExpirationDateForTest = LocalDate.of(2020, 1, 1); // Date far in the past
-            PerishableProduct expiredMilkProduct = new PerishableProduct(60, "Expired Milk", 4.99, 10, pastExpirationDateForTest);
-            inventoryManagerForExpiredTest.addProduct(expiredMilkProduct); // Should allow adding expired products
+            InventoryManager invManExpiredTest = new InventoryManager();
+            LocalDate pastExpirationDateTest = LocalDate.of(2020, 1, 1); // Date far in the past
+            PerishableProduct expiredMilkProduct = new PerishableProduct(60, "Expired Milk", 4.99, 10, pastExpirationDateTest);
+            invManExpiredTest.addProduct(expiredMilkProduct); // Should allow adding expired products
             
             if (expiredMilkProduct.isExpired()) { // Verify it's marked as expired
                 testPass("Add expired perishable product (allowed, but marked expired)");
@@ -782,9 +782,9 @@ public class TestInventoryManager {
         // Purpose: Verify that system handles maximum integer values for quantity
         // Expected: Product should be added successfully with Integer.MAX_VALUE quantity
         try {
-            InventoryManager inventoryManagerForLargeQuantityTest = new InventoryManager();
+            InventoryManager invManLargeQuantityTest = new InventoryManager();
             Product productWithLargeQuantity = new Product(70, "Bulk Item", 1.0, Integer.MAX_VALUE); // Maximum possible quantity
-            inventoryManagerForLargeQuantityTest.addProduct(productWithLargeQuantity); // Should handle large quantities
+            invManLargeQuantityTest.addProduct(productWithLargeQuantity); // Should handle large quantities
             testPass("Add product with very large quantity");
         } catch (Exception caughtException) { // Catch any unexpected exceptions
             testFail("Large quantity threw exception: " + caughtException.getMessage());
@@ -794,9 +794,9 @@ public class TestInventoryManager {
         // Purpose: Verify that system accepts minimum valid prices (just above zero)
         // Expected: Product should be added successfully with price of 0.01
         try {
-            InventoryManager inventoryManagerForSmallPriceTest = new InventoryManager();
+            InventoryManager invManForSmallPriceTest = new InventoryManager();
             Product productWithSmallPrice = new Product(71, "Cheap Item", 0.01, 1000); // Minimum practical price
-            inventoryManagerForSmallPriceTest.addProduct(productWithSmallPrice); // Should accept very small but positive prices
+            invManForSmallPriceTest.addProduct(productWithSmallPrice); // Should accept very small but positive prices
             testPass("Add product with very small price (0.01)");
         } catch (Exception caughtException) { // Catch any unexpected exceptions
             testFail("Very small price threw exception: " + caughtException.getMessage());
@@ -806,16 +806,16 @@ public class TestInventoryManager {
         // Purpose: Verify that different operations work correctly in combination
         // Expected: Add, delete, and search should all work together without conflicts
         try {
-            InventoryManager inventoryManagerForMultipleOperations = new InventoryManager();
+            InventoryManager invManMultiOperations = new InventoryManager();
             Product firstProductForSequence = new Product(80, "Item1", 50.0, 10);
             Product secondProductForSequence = new Product(81, "Item2", 60.0, 20);
             Product thirdProductForSequence = new Product(82, "Item3", 70.0, 30);
             
-            inventoryManagerForMultipleOperations.addProduct(firstProductForSequence);    // Add first product
-            inventoryManagerForMultipleOperations.addProduct(secondProductForSequence);    // Add second product
-            inventoryManagerForMultipleOperations.addProduct(thirdProductForSequence);    // Add third product
-            inventoryManagerForMultipleOperations.deleteProduct(81);    // Delete middle product
-            inventoryManagerForMultipleOperations.searchProduct(82);    // Search for remaining product
+            invManMultiOperations.addProduct(firstProductForSequence);    // Add first product
+            invManMultiOperations.addProduct(secondProductForSequence);    // Add second product
+            invManMultiOperations.addProduct(thirdProductForSequence);    // Add third product
+            invManMultiOperations.deleteProduct(81);    // Delete middle product
+            invManMultiOperations.searchProduct(82);    // Search for remaining product
             
             testPass("Multiple operations in sequence");
         } catch (Exception caughtException) { // Catch any unexpected exceptions
@@ -832,7 +832,7 @@ public class TestInventoryManager {
      * 
      * Validates that inventory enforces capacity constraints.
      */
-    private static void testInventoryFullException() {
+    private static void testInvFullException() {
         System.out.println("\n" + "-".repeat(80));
         System.out.println("TEST: Inventory Full Exception");
         System.out.println("-".repeat(80));
@@ -840,17 +840,17 @@ public class TestInventoryManager {
         // Purpose: Verify that inventory rejects products when full (capacity = 50)
         // Expected: InvalidInputException should be thrown when trying to add 51st product
         try {
-            InventoryManager fullInventoryManagerForTest = new InventoryManager(); // Create inventory with capacity of 50
+            InventoryManager fullInvManForTest = new InventoryManager(); // Create inventory with capacity of 50
             
             // Fill inventory to maximum capacity
-            for (int loopIndexForFillingInventory = 0; loopIndexForFillingInventory < 50; loopIndexForFillingInventory++) {
-                Product productToFillInventory = new Product(loopIndexForFillingInventory, "Product" + loopIndexForFillingInventory, 10.0 + loopIndexForFillingInventory, loopIndexForFillingInventory + 1);
-                fullInventoryManagerForTest.addProduct(productToFillInventory); // Add products until inventory is full
+            for (int loopIndexFillInv = 0; loopIndexFillInv < 50; loopIndexFillInv++) {
+                Product productFillInv = new Product(loopIndexFillInv, "Product" + loopIndexFillInv, 10.0 + loopIndexFillInv, loopIndexFillInv + 1);
+                fullInvManForTest.addProduct(productFillInv); // Add products until inventory is full
             }
             
             // Try to add 51st product (should exceed capacity)
-            Product overflowProductToTriggerException = new Product(999, "Overflow", 100.0, 1);
-            fullInventoryManagerForTest.addProduct(overflowProductToTriggerException); // This should throw InvalidInputException
+            Product overflowProdTrigException = new Product(999, "Overflow", 100.0, 1);
+            fullInvManForTest.addProduct(overflowProdTrigException); // This should throw InvalidInputException
             testFail("Should throw InvalidInputException when inventory is full"); // If no exception, test fails
         } catch (InvalidInputException validationException) { // Expected exception - inventory is full
             testPass("Inventory full throws InvalidInputException");
