@@ -3,36 +3,16 @@
  * Represents standard (non-perishable) products with ID, name, price, and quantity.
  * 
  * Author: Mahreen Firdaws
- * 
- * Validation rules:
- * - Price must be > 0
- * - Quantity must be >= 0
- * - Product ID must be >= 0 (immutable after creation)
- * 
- * PerishableProduct extends this class to add expiration date functionality.
  */
 public class Product {
 
-    // Product ID: Unique identifier for each product
-    // Once a product is created with ID 101, it will always be 101
     private final int productId;
-    
-    // Product Name: Text description of the product
-    // Example: product.productName = "Laptop"
     public String productName;
-    
-    // Price: Cost of the product in dollars
-    // Validated to ensure it's always positive (> 0)
     public double price;
-    
-    // Quantity: Number of units in stock
-    // Validated to ensure it's never negative (zero is okay = out of stock)
     public int quantity;
 
     /**
      * Default constructor for testing purposes.
-     * Creates product with ID=0, name="Unnamed Product", price=0.0, quantity=0.
-     * Note: price violates validation rules and must be updated before production use.
      */
     public Product() {
         this.productId = 0;
@@ -87,7 +67,7 @@ public class Product {
     /**
      * Sets the price with validation.
      * 
-     * @param price New price (> 0)
+     * @param price New price
      * @throws InvalidInputException if price <= 0
      */
     public void setPrice(double price) throws InvalidInputException {
@@ -104,7 +84,7 @@ public class Product {
     /**
      * Sets the quantity with validation.
      * 
-     * @param quantity New quantity (>= 0)
+     * @param quantity New quantity
      * @throws InvalidInputException if quantity < 0
      */
     public void setQuantity(int quantity) throws InvalidInputException {

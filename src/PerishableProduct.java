@@ -6,22 +6,17 @@ import java.util.Optional;
  * Inherits from Product class and adds expiration date functionality.
  * 
  * Author: Halcionne (Martin Khlopin)
- * 
- * Uses Optional<LocalDate> for null-safe date handling - learned this from
- * Oracle docs as a better alternative to null checks. The .map() and .orElse()
- * took some time to understand but makes the code cleaner.
  */
 public class PerishableProduct extends Product {
-    // Expiration date - when product expires (Optional for null-safe handling)
     private Optional<LocalDate> expirationDate;
 
     /**
-     * Constructor for creating a perishable product WITHOUT an expiration date.
+     * Constructor for creating a perishable product without an expiration date.
      * 
-     * @param productId Unique identifier (must be >= 0)
+     * @param productId Unique identifier
      * @param productName Name of the product
-     * @param price Price in dollars (must be > 0)
-     * @param quantity Stock quantity (must be >= 0)
+     * @param price Price in dollars
+     * @param quantity Stock quantity
      * @throws InvalidInputException if validation fails
      */
     public PerishableProduct(int productId, String productName, double price, int quantity) throws InvalidInputException {
@@ -30,13 +25,13 @@ public class PerishableProduct extends Product {
     }
     
     /**
-     * Constructor for creating a perishable product WITH an expiration date.
+     * Constructor for creating a perishable product with an expiration date.
      * 
-     * @param productId Unique identifier (must be >= 0)
+     * @param productId Unique identifier
      * @param productName Name of the product
-     * @param price Price in dollars (must be > 0)
-     * @param quantity Stock quantity (must be >= 0)
-     * @param expirationDate Date when product expires (can be null)
+     * @param price Price in dollars
+     * @param quantity Stock quantity
+     * @param expirationDate Date when product expires
      * @throws InvalidInputException if validation fails
      */
     public PerishableProduct(int productId, String productName, double price, int quantity, LocalDate expirationDate) throws InvalidInputException {
@@ -45,18 +40,18 @@ public class PerishableProduct extends Product {
     }
 
     /**
-     * Gets the expiration date of the product (if one exists).
+     * Gets the expiration date.
      * 
-     * @return Optional<LocalDate> containing the expiration date if set, or Optional.empty() if no date
+     * @return Optional containing the expiration date, or empty if not set
      */
     public Optional<LocalDate> getExpirationDate() {
         return expirationDate;
     }
     
     /**
-     * Sets or updates the expiration date of the product.
+     * Sets or updates the expiration date.
      * 
-     * @param expirationDate New expiration date (can be null to clear/remove the date)
+     * @param expirationDate New expiration date
      */
     public void setExpirationDate(LocalDate expirationDate) {
         this.expirationDate = Optional.ofNullable(expirationDate);
@@ -65,7 +60,7 @@ public class PerishableProduct extends Product {
     /**
      * Checks if the product has expired.
      * 
-     * @return true if product has expired, false if not expired or if no expiration date is set
+     * @return true if expired, false otherwise
      */
     public boolean isExpired() {
         return expirationDate
@@ -74,8 +69,7 @@ public class PerishableProduct extends Product {
     }
     
     /**
-     * Displays all product information including expiration details to the console.
-     * Overrides the parent's displayProductInfo() to add expiration-specific information.
+     * Displays product information including expiration details.
      */
     @Override
     public void displayProductInfo() {
