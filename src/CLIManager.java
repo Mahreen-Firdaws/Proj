@@ -39,6 +39,7 @@ public class CLIManager {
             System.out.println("|---------------------------------|");
             System.out.print("Enter your choice: ");
             int cliChoice = keyboard.nextInt();
+            keyboard.nextLine(); // consume leftover newline after menu choice
             
             if (cliChoice < 1 || cliChoice > 6) {
                 System.out.println("Invalid input. Please enter a number between 1 and 6.");
