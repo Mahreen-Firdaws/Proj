@@ -51,6 +51,9 @@ public class Product {
      * @throws InvalidInputException if validation fails
      */
     public Product(int productId, String productName, double price, int quantity) throws InvalidInputException {
+        if (productId < 0) {
+            throw new InvalidInputException("Product ID cannot be negative. Currently provided: " + productId);
+        }
         if (price <= 0) {
             throw new InvalidInputException("Price must be greater than zero. Currently provided: " + price);
         }
