@@ -163,23 +163,23 @@ public class InvManGUI extends JFrame {
         
         // Lambda expression - learned these are shorthand for anonymous inner classes
         // This enables/disables expiration field based on checkbox state
-        addPerishableBox.addActionListener(e -> 
+        addPerishableBox.addActionListener(perishableCheckboxToggleEvent -> 
             addExpirationField.setEnabled(addPerishableBox.isSelected())
         );
         
-        int row = 0;
-        addFormRow(formPanel, gbc, row++, "Product ID:", addIdField);
-        addFormRow(formPanel, gbc, row++, "Product Name:", addNameField);
-        addFormRow(formPanel, gbc, row++, "Price ($):", addPriceField);
-        addFormRow(formPanel, gbc, row++, "Quantity:", addQuantityField);
+        int formRowNumber = 0;
+        addFormRow(formPanel, gbc, formRowNumber++, "Product ID:", addIdField);
+        addFormRow(formPanel, gbc, formRowNumber++, "Product Name:", addNameField);
+        addFormRow(formPanel, gbc, formRowNumber++, "Price ($):", addPriceField);
+        addFormRow(formPanel, gbc, formRowNumber++, "Quantity:", addQuantityField);
         
         gbc.gridx = 0;
-        gbc.gridy = row++;
+        gbc.gridy = formRowNumber++;
         gbc.gridwidth = 2;
         formPanel.add(addPerishableBox, gbc);
         gbc.gridwidth = 1;
         
-        addFormRow(formPanel, gbc, row++, "Expiration (YYYY-MM-DD):", addExpirationField);
+        addFormRow(formPanel, gbc, formRowNumber++, "Expiration (YYYY-MM-DD):", addExpirationField);
         
         panel.add(formPanel, BorderLayout.CENTER);
         
@@ -189,12 +189,12 @@ public class InvManGUI extends JFrame {
         JButton addButton = createStyledButton("Add Product", SUCCESS_COLOR);
         JButton clearButton = createStyledButton("Clear Fields", Color.GRAY);
         
-        addButton.addActionListener(e -> {
+        addButton.addActionListener(addButtonClickEvent -> {
             addProductFromFields(addIdField, addNameField, addPriceField, 
                 addQuantityField, addPerishableBox, addExpirationField);
         });
         
-        clearButton.addActionListener(e -> {
+        clearButton.addActionListener(clearButtonClickEvent -> {
             addIdField.setText("");
             addNameField.setText("");
             addPriceField.setText("");
@@ -381,25 +381,25 @@ public class InvManGUI extends JFrame {
         updateExpirationField.setEnabled(false); // Start disabled
         
         // Link checkbox to expiration field (enable/disable based on checkbox)
-        updatePerishableBox.addActionListener(e -> 
+        updatePerishableBox.addActionListener(updatePerishableCheckboxToggleEvent -> 
             updateExpirationField.setEnabled(updatePerishableBox.isSelected())
         );
         
         // Add all form rows in order
-        int row = 0;
-        addFormRow(formPanel, gbc, row++, "Product ID:", updateIdField);
-        addFormRow(formPanel, gbc, row++, "Product Name:", updateNameField);
-        addFormRow(formPanel, gbc, row++, "Price ($):", updatePriceField);
-        addFormRow(formPanel, gbc, row++, "Quantity:", updateQuantityField);
+        int formRowNumber = 0;
+        addFormRow(formPanel, gbc, formRowNumber++, "Product ID:", updateIdField);
+        addFormRow(formPanel, gbc, formRowNumber++, "Product Name:", updateNameField);
+        addFormRow(formPanel, gbc, formRowNumber++, "Price ($):", updatePriceField);
+        addFormRow(formPanel, gbc, formRowNumber++, "Quantity:", updateQuantityField);
         
         // Add checkbox (spans 2 columns)
         gbc.gridx = 0;
-        gbc.gridy = row++;
+        gbc.gridy = formRowNumber++;
         gbc.gridwidth = 2;
         formPanel.add(updatePerishableBox, gbc);
         gbc.gridwidth = 1;
         
-        addFormRow(formPanel, gbc, row++, "Expiration (YYYY-MM-DD):", updateExpirationField);
+        addFormRow(formPanel, gbc, formRowNumber++, "Expiration (YYYY-MM-DD):", updateExpirationField);
         
         panel.add(formPanel, BorderLayout.CENTER);
         
@@ -481,14 +481,14 @@ public class InvManGUI extends JFrame {
         // UPDATE BUTTON ACTION - Saves the modified product data
         // Update Product button - saves changes
         // Delegates to another method that handles validation and saving
-        updateButton.addActionListener(e -> {
+        updateButton.addActionListener(updateButtonClickEvent -> {
             updateProductFromFields(updateIdField, updateNameField, updatePriceField,
                 updateQuantityField, updatePerishableBox, updateExpirationField);
         });
         
         // CLEAR BUTTON ACTION - Resets all fields to empty
         // Useful if user wants to start over or load a different product
-        clearButton.addActionListener(e -> {
+        clearButton.addActionListener(clearButtonClickEvent -> {
             updateIdField.setText("");              // Clear ID
             updateNameField.setText("");            // Clear name
             updatePriceField.setText("");           // Clear price
@@ -1456,12 +1456,12 @@ public class InvManGUI extends JFrame {
             // Show success message
             setStatus("Product updated successfully: " + updatedProductName, SUCCESS_COLOR);
             
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException caughtNumberFormatException) {
             // User entered non-numeric text OR number exceeds valid range
-            String errorMsg = e.getMessage();
+            String errorMessageFromException = caughtNumberFormatException.getMessage();
             
             // Check if it's a quantity overflow (exceeds Integer.MAX_VALUE)
-            if (errorMsg != null && errorMsg.contains("For input string")) {
+            if (errorMessageFromException != null && errorMessageFromException.contains("For input string")) {
                 // Parse failed - could be format error or overflow
                 // Try to determine which field caused the error
                 String updatedProductQuantityText = quantityField.getText().trim();
@@ -1489,15 +1489,15 @@ public class InvManGUI extends JFrame {
             
             // Default error message for invalid format
             showError("Invalid number format!\nPlease enter valid numbers for ID, Price, and Quantity.\n\nExamples:\n  ID: 1\n  Price: 99.99\n  Quantity: 1000");
-        } catch (DateTimeParseException e) {
+        } catch (DateTimeParseException caughtDateTimeParseException) {
             // Invalid date format in expiration field
             showError("Invalid date format!\nPlease use YYYY-MM-DD format (e.g., 2025-12-31)");
-        } catch (ProductNotFoundException e) {
+        } catch (ProductNotFoundException caughtProductNotFoundException) {
             // Product was not found during delete operation
             showError("Product not found!");
-        } catch (InvalidInputException e) {
+        } catch (InvalidInputException caughtInvalidInputException) {
             // Custom validation error from InventoryManager
-            showError(e.getMessage());
+            showError(caughtInvalidInputException.getMessage());
         }
     }
     
@@ -1549,7 +1549,7 @@ public class InvManGUI extends JFrame {
             // manager.getProductCount() returns how many products are now in inventory
             setStatus("Sample data loaded - " + manager.getProductCount() + " products", SUCCESS_COLOR);
             
-        } catch (InvalidInputException e) {
+        } catch (InvalidInputException caughtInvalidInputException) {
             // If any validation fails during sample data creation, show error
             // (This should rarely happen since sample data is hardcoded with valid values)
             setStatus("Error loading sample data", DANGER_COLOR);
