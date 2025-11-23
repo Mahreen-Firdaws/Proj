@@ -67,7 +67,7 @@ public class Product {
     /**
      * Sets the price with validation.
      * 
-     * @param price New price
+     * @param price New price (must be > 0)
      * @throws InvalidInputException if price <= 0
      */
     public void setPrice(double price) throws InvalidInputException {
