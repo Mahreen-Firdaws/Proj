@@ -1,10 +1,27 @@
 import java.util.Scanner;
+/**
+ * Manages the command-line interface (CLI) for the Inventory Management System.
+ * <p>
+ * Provides a menu-driven interface for users to interact with the inventory,
+ * including adding, viewing, updating, deleting, and searching for products.
+ */
 public class CLIManager {
 
+    /**
+     * Constructs a CLIManager using the standard input stream.
+     * <p>
+     * This constructor initializes the CLIManager with a Scanner that reads from
+     * {@code System.in}.
+     */
     public CLIManager() {
         this(new Scanner(System.in));
     }
     
+    /**
+     * Constructs a CLIManager with the specified Scanner for input.
+     *
+     * @param keyboard the Scanner to use for reading user input
+     */
     public CLIManager(Scanner keyboard) {
         InventoryManager inventoryManager = new InventoryManager();
         
