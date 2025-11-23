@@ -14,8 +14,9 @@ public class Main {
         try (Scanner scanner = new Scanner(System.in)) {
             System.out.println("=== Inventory Management System ===");
             System.out.println("1. Run Test Cases");
-            System.out.println("2. Launch GUI");
-            System.out.print("Choose an option (1 or 2): ");
+            System.out.println("2. Launch CLI");
+            System.out.println("3. Launch GUI");
+            System.out.print("Choose an option (1, 2, or 3): ");
             
             int choice = scanner.nextInt();
             
@@ -27,6 +28,10 @@ public class Main {
                     System.out.println("\nThank you for using the Inventory Manager Solution!");
                 }
                 case 2 -> {
+                    System.out.println("\nLaunching CLI...");
+                    new CLIManager();
+                }
+                case 3 -> {
                     System.out.println("\nLaunching GUI...");
                     javax.swing.SwingUtilities.invokeLater(() -> {
                         new InvManGUI().setVisible(true);
