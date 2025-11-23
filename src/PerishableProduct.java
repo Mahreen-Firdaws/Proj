@@ -31,7 +31,7 @@ public class PerishableProduct extends Product {
      * @param productName Name of the product
      * @param price Price in dollars
      * @param quantity Stock quantity
-     * @param expirationDate Date when product expires
+     * @param expirationDate Date when product expires (nullable; if null, product has no expiration date)
      * @throws InvalidInputException if validation fails
      */
     public PerishableProduct(int productId, String productName, double price, int quantity, LocalDate expirationDate) throws InvalidInputException {
