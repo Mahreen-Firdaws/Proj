@@ -1110,8 +1110,8 @@ public class InvManGUI extends JFrame {
             }
             
             // Reject names that are ONLY numbers (e.g., "12345" is not a valid name)
-            // ^[0-9 ]+$ means: start to end, only digits and spaces
-            if (productName.matches("^[0-9 ]+$")) {
+            // ^[0-9]+$ means: start to end, only digits (no spaces)
+            if (productName.matches("^[0-9]+$")) {
                 showError("Product name cannot be numbers only!");
                 return;
             }
