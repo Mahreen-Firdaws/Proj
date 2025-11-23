@@ -1,6 +1,15 @@
 import java.util.Scanner;
 
+/**
+ * Main - Entry point for the Inventory Management System.
+ * Displays console menu to choose between test mode or GUI mode.
+ */
 public class Main {
+    /**
+     * Main method - displays menu and launches chosen mode.
+     * 
+     * @param args Command-line arguments (not used)
+     */
     public static void main(String[] args) {
         try (Scanner scanner = new Scanner(System.in)) {
             System.out.println("=== Inventory Management System ===");
@@ -15,17 +24,17 @@ public class Main {
                     System.out.println("\nStarting tests...");
                     TestInventoryManager.runAllTests();
                     System.out.println("All tests completed.");
+                    System.out.println("\nThank you for using the Inventory Manager Solution!");
                 }
                 case 2 -> {
                     System.out.println("\nLaunching GUI...");
-                    // TODO: Launch your Swing GUI here
-                    // Example: javax.swing.SwingUtilities.invokeLater(() -> {
-                    //     new YourGUIClass().setVisible(true);
-                    // });
-                    System.out.println("GUI not yet implemented.");
+                    javax.swing.SwingUtilities.invokeLater(() -> {
+                        new InvManGUI().setVisible(true);
+                    });
                 }
                 default -> System.out.println("Invalid choice.");
             }
         }
+        
     }
 }
