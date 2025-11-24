@@ -1,3 +1,6 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 /**
@@ -52,6 +55,9 @@ public class CLIManager {
             switch (cliChoice) {
                     case 1 -> {
                         try {
+                            System.out.print("Is this a perishable product? (y/n): ");
+                            String isPerishable = keyboard.nextLine().trim().toLowerCase();
+                            
                             System.out.print("Input Product ID:");
                             int prodID=keyboard.nextInt();
                             keyboard.nextLine();
@@ -85,7 +91,25 @@ public class CLIManager {
                                 continue;
                             }
                             
-                            Product product = new Product(prodID, prodName, prodPrice, prodQuantity);
+                            Product product;
+                            if (isPerishable.equals("y") || isPerishable.equals("yes")) {
+                                System.out.print("Enter expiration date (YYYY-MM-DD) or press Enter for no expiration: ");
+                                String dateInput = keyboard.nextLine().trim();
+                            if (dateInput.isEmpty()) {
+                                    product = new PerishableProduct(prodID, prodName, prodPrice, prodQuantity);
+                                } else {
+                                    try {
+                                        LocalDate expirationDate = LocalDate.parse(dateInput, DateTimeFormatter.ISO_LOCAL_DATE);
+                                        product = new PerishableProduct(prodID, prodName, prodPrice, prodQuantity, expirationDate);
+                                    } catch (DateTimeParseException e) {
+                                        System.out.println("Failed to add product: Invalid date format. Please use YYYY-MM-DD.");
+                                        continue;
+                                    }
+                                }
+                            } else {
+                                product = new Product(prodID, prodName, prodPrice, prodQuantity);
+                            }
+                            
                             inventoryManager.addProduct(product);
                             System.out.println("Product added successfully.");
                         } catch (InputMismatchException e) {
