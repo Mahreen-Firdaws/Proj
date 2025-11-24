@@ -36,18 +36,9 @@ public class Main {
                 
                 case 2 -> {
                     System.out.println("\nLaunching CLI...");
-                    try {
-                        @SuppressWarnings("unused")
-                        CLIManager cli = new CLIManager(scanner);
-                        running = true; // Continue running to show main menu again
-
-                    }  catch (java.util.NoSuchElementException noElementException ) {
-                        // CLI ran out of input unexpectedly (e.g., stdin closed).
-                        System.out.println("CLI input ended unexpectedly. Returning to main menu.");
-                        // Do not close scanner here; Main owns it.
-                        
-                    }
-                running = false;
+                    @SuppressWarnings("unused")
+                    CLIManager cli = new CLIManager(scanner);
+                    running = false;
                 }
                 case 3 -> {
                     System.out.println("\nLaunching GUI...");

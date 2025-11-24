@@ -25,7 +25,7 @@ public class InventoryManager {
      * Adds a new product to the inventory.
      * 
      * @param product The product to add to inventory
-     * @throws InvalidInputException if product is null or inventory is full (50 products)
+     * @throws InvalidInputException if product is null, inventory is full (50 products), or ID already exists
      */
     public void addProduct(Product product) throws InvalidInputException {
         if (product == null) {
@@ -34,6 +34,13 @@ public class InventoryManager {
         
         if (uniqueProductCount >= products.length) {
             throw new InvalidInputException("Inventory is full. Cannot add more products.");
+        }
+        
+        // Check for duplicate product ID
+        for (int i = 0; i < uniqueProductCount; i++) {
+            if (products[i] != null && products[i].getProductId() == product.getProductId()) {
+                throw new InvalidInputException("Product with ID " + product.getProductId() + " already exists.");
+            }
         }
         
         products[uniqueProductCount++] = product;
@@ -55,24 +62,27 @@ public class InventoryManager {
      * Updates a product's price or quantity by ID using console-based interaction.
      * 
      * @param productId The ID of the product to update
+     * @param keyboard The Scanner to use for input
      * @throws ProductNotFoundException if no product with given ID exists
      */
-    public void updateProduct(int productId) throws ProductNotFoundException {
+    public void updateProduct(int productId, Scanner keyboard) throws ProductNotFoundException {
         for (int i = 0; i < uniqueProductCount; i++) {
             if (products[i] != null && products[i].getProductId() == productId) {
-                try (Scanner keyboard = new Scanner(System.in)) {
+                try {
                     System.out.print("Enter either 'price' or 'quantity' to update: ");
                     String choice = keyboard.nextLine();
                     
                     if (choice.equalsIgnoreCase("price")) {
                         System.out.print("Enter new price: ");
                         double newPrice = keyboard.nextDouble();
+                        keyboard.nextLine(); // Clear buffer
                         products[i].setPrice(newPrice);
                         System.out.println("Price updated.");
                         
                     } else if (choice.equalsIgnoreCase("quantity")) {
                         System.out.print("Enter new quantity: ");
                         int newQuantity = keyboard.nextInt();
+                        keyboard.nextLine(); // Clear buffer
                         products[i].setQuantity(newQuantity);
                         System.out.println("Quantity updated.");
                         

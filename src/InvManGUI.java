@@ -999,16 +999,6 @@ public class InvManGUI extends JFrame {
                 return;
             }
             
-            // Check for duplicate product IDs
-            Product[] existingProductsArray = manager.getProducts();
-            
-            for (int arrayIndex = 0; arrayIndex < manager.getProductCount(); arrayIndex++) {
-                if (existingProductsArray[arrayIndex] != null && existingProductsArray[arrayIndex].getProductId() == parsedProductId) {
-                    showError("Product with ID " + parsedProductId + " already exists!");
-                    return;
-                }
-            }
-            
             // Create product object
             Product newProductToAdd;
             
