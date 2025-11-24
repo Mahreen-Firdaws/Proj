@@ -76,8 +76,9 @@ public class CLIManager {
                     case 3 -> {
                         System.out.print("Enter Product ID to update: ");
                         int updateId = keyboard.nextInt();
+                        keyboard.nextLine(); // Clear buffer
                         try {
-                            inventoryManager.updateProduct(updateId);
+                            inventoryManager.updateProduct(updateId, keyboard);
                         } catch (ProductNotFoundException e) {
                             System.out.println(e.getMessage());
                         } catch (Exception e) {
@@ -115,7 +116,10 @@ public class CLIManager {
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter the correct data type.");
                 keyboard.nextLine(); // Clear invalid input
-            } 
+            } catch (java.util.NoSuchElementException e) {
+                System.out.println("No input available. Please try again.");
+                // Continue the loop to re-display the menu
+            }
        }
     }
 }
