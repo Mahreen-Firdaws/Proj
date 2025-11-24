@@ -59,8 +59,10 @@ public class CLIManager {
                             String prodName=keyboard.nextLine();
                             System.out.print("Input Product Price:");
                             double prodPrice=keyboard.nextDouble();
+                            keyboard.nextLine();
                             System.out.print("Input Product Quantity:");
                             int prodQuantity=keyboard.nextInt();
+                            keyboard.nextLine();
                             Product product = new Product(prodID, prodName, prodPrice, prodQuantity);
                             inventoryManager.addProduct(product);
                             System.out.println("Product added successfully.");
@@ -78,6 +80,8 @@ public class CLIManager {
                             inventoryManager.updateProduct(updateId);
                         } catch (ProductNotFoundException e) {
                             System.out.println(e.getMessage());
+                        } catch (Exception e) {
+                            System.out.println("Failed to update product: " + e.getMessage());
                         }
                     }
                     case 4 -> {
@@ -100,7 +104,10 @@ public class CLIManager {
                     }
                     case 6 -> {
                         System.out.println("Exiting program. Goodbye!");
-                        keyboard.close();
+                        // Do not close `keyboard` here because it may have been
+                        // provided by the caller (e.g., `Main`). Closing a
+                        // Scanner wrapping `System.in` here can cause
+                        // IllegalStateException when other code tries to use it.
                         running = false;
                         break;
                     }
