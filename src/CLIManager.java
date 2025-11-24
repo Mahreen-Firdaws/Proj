@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 /**
  * Manages the command-line interface (CLI) for the Inventory Management System.
@@ -38,6 +39,8 @@ public class CLIManager {
             System.out.println("| 6. Exit                         |");
             System.out.println("|---------------------------------|");
             System.out.print("Enter your choice: ");
+
+            try{
             int cliChoice = keyboard.nextInt();
             keyboard.nextLine();
             
@@ -99,8 +102,13 @@ public class CLIManager {
                         System.out.println("Exiting program. Goodbye!");
                         keyboard.close();
                         running = false;
+                        break;
                     }
                 }
-            }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter the correct data type.");
+                keyboard.nextLine(); // Clear invalid input
+            } 
        }
+    }
 }

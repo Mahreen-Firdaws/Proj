@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -17,11 +18,11 @@ public class Main {
         System.out.println("2. Launch CLI");
         System.out.println("3. Launch GUI");
         System.out.print("Choose an option (1, 2, or 3): ");
-        
+        try {
         int choice = scanner.nextInt();
         scanner.nextLine();
         
-        switch (choice) {
+            switch (choice) {
             case 1 -> {
                 System.out.println("\nStarting tests...");
                 TestInventoryManager.runAllTests();
@@ -47,7 +48,11 @@ public class Main {
                 System.out.println("Invalid choice.");
                 scanner.close();
             }
-        }
-        
+        }    
+        } catch (InputMismatchException e) {
+            System.out.println("Invalid input. Please enter a number (1, 2, or 3).");
+            scanner.nextLine(); // Clear invalid input
+            main(new String[] {}); // Restart main method
+        } 
     }
 }
