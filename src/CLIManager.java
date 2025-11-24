@@ -60,12 +60,37 @@ public class CLIManager {
                             System.out.print("Input Product Price:");
                             double prodPrice=keyboard.nextDouble();
                             keyboard.nextLine();
+                            
+                            // Validate price
+                            if (prodPrice <= 0) {
+                                System.out.println("Failed to add product: Price must be greater than zero!");
+                                continue;
+                            }
+                            if (prodPrice > 999999999999.99) {
+                                System.out.println("Failed to add product: Price is too high! Maximum allowed: $999,999,999,999.99");
+                                continue;
+                            }
+                            if (Double.isInfinite(prodPrice) || Double.isNaN(prodPrice)) {
+                                System.out.println("Failed to add product: Price is too large!");
+                                continue;
+                            }
+                            
                             System.out.print("Input Product Quantity:");
                             int prodQuantity=keyboard.nextInt();
                             keyboard.nextLine();
+                            
+                            // Validate quantity
+                            if (prodQuantity < 0) {
+                                System.out.println("Failed to add product: Quantity cannot be negative!");
+                                continue;
+                            }
+                            
                             Product product = new Product(prodID, prodName, prodPrice, prodQuantity);
                             inventoryManager.addProduct(product);
                             System.out.println("Product added successfully.");
+                        } catch (InputMismatchException e) {
+                            System.out.println("Failed to add product: Invalid input. Quantity must be a valid integer (max 2,147,483,647).");
+                            keyboard.nextLine(); // Clear invalid input
                         } catch (InvalidInputException e) {
                             System.out.println("Failed to add product: " + e.getMessage());
                         }
@@ -88,6 +113,7 @@ public class CLIManager {
                     case 4 -> {
                         System.out.print("Enter Product ID to delete: ");
                         int prodID = keyboard.nextInt();
+                        keyboard.nextLine(); // Clear buffer
                         try{
                             inventoryManager.deleteProduct(prodID);
                         } catch (ProductNotFoundException e) {
@@ -97,6 +123,7 @@ public class CLIManager {
                     case 5 -> {
                         System.out.print("Enter Product ID to search: ");
                         int searchId = keyboard.nextInt();
+                        keyboard.nextLine(); // Clear buffer
                         try {
                             inventoryManager.searchProduct(searchId);
                         } catch (ProductNotFoundException e) {
