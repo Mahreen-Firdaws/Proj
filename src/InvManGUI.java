@@ -92,6 +92,14 @@ public class InvManGUI extends JFrame {
         setLayout(new BorderLayout(0, 0));
         getContentPane().setBackground(BACKGROUND_COLOR);
         
+        // Set frame icon
+        try {
+            ImageIcon icon = new ImageIcon("src/cheese.png");
+            setIconImage(icon.getImage());
+        } catch (Exception caughException) {
+            System.err.println("Could not load icon: " + caughException.getMessage());
+        }
+        
         // Add window listener to print goodbye message when GUI closes
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
