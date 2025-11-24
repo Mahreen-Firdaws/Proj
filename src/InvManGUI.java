@@ -22,14 +22,14 @@
  * - Modern look with borders and padding
  */
 
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.border.*;
 import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import javax.swing.*;
+import javax.swing.border.*;
 import javax.swing.plaf.ColorUIResource;
+import javax.swing.table.DefaultTableModel;
 
 /**
  * InvManGUI - GUI design with tabbed interface
@@ -286,7 +286,7 @@ public class InvManGUI extends JFrame {
                     // Build result display
                     StringBuilder searchResultBuilder = new StringBuilder();
                     searchResultBuilder.append("PRODUCT FOUND\n");
-                    searchResultBuilder.append("═".repeat(50)).append("\n\n");
+                    searchResultBuilder.append("=".repeat(50)).append("\n\n");
                     
                     searchResultBuilder.append(String.format("Product ID:      %d\n", foundProductInSearch.getProductId()));
                     searchResultBuilder.append(String.format("Product Name:    %s\n", foundProductInSearch.productName));
