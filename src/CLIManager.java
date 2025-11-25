@@ -58,6 +58,13 @@ public class CLIManager {
                             System.out.print("Is this a perishable product? (y/n): ");
                             String isPerishable = keyboard.nextLine().trim().toLowerCase();
                             
+                            // Validate perishable input
+                            if (!isPerishable.equals("y") && !isPerishable.equals("yes") && 
+                                !isPerishable.equals("n") && !isPerishable.equals("no")) {
+                                System.out.println("Failed to add product: Invalid input. Please enter 'y' or 'n'.");
+                                continue;
+                            }
+                            
                             System.out.print("Input Product ID:");
                             int prodID=keyboard.nextInt();
                             keyboard.nextLine();
